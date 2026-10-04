@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Data and large artifacts
+data/
+*.npy
+*.faiss
+*.pt
+*.bin
+*.pkl
+
+# Secrets
+.env
+*.env
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Colab ephemeral
+/content/
