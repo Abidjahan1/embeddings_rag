@@ -11,6 +11,8 @@ data/
 *.pt
 *.bin
 *.pkl
+__pycache__/
+.venv/
 
 # Secrets
 .env
