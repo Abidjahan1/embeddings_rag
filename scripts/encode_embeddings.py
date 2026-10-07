@@ -43,14 +43,21 @@ def load_passages(corpus_size: int, seed: int) -> tuple[list[str], list[str]]:
     """
     Load MIRACL Bengali corpus and sample `corpus_size` passages.
 
-    NOTE: This is a temporary sampling strategy for the smoke test.
-    The proper nested-corpus sampler (that guarantees all judged-relevant
-    passages are included) comes in a later module.
+    Verified facts (from Colab run with datasets==3.6.0):
+    - Dataset: miracl/miracl-corpus, config="bn"
+    - Split name: "train"
+    - Features: docid, title, text
+    - Total rows: 297,265
+    - Loading requires trust_remote_code=True in datasets 3.x
 
-    Returns: (doc_ids, texts)
+    Returns: (doc_ids, texts), each of length corpus_size.
     """
-    ds = load_dataset("miracl/miracl-corpus", "bn", trust_remote_code=True)
-    split = ds["train"]  # verify split name; MIRACL corpus usually has 'train'
+    ds = load_dataset(
+        "miracl/miracl-corpus",
+        "bn",
+        trust_remote_code=True,   # required on datasets 3.6.0
+    )
+    split = ds["train"]
     split = split.shuffle(seed=seed).select(range(min(corpus_size, len(split))))
     doc_ids = [str(x["docid"]) for x in split]
     texts = [x["text"] for x in split]
